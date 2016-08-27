@@ -21,8 +21,8 @@ public class GameScreen implements Screen {
 		AssetLoader.load();
 		float screenWidth = Gdx.graphics.getWidth();
 		float screenHeight = Gdx.graphics.getHeight();
-		float gameHeight = 240;
-		float gameWidth = gameHeight * screenWidth / screenHeight;
+		float gameHeight = 720;
+		float gameWidth = 1280;
 		Gdx.input.setCatchBackKey(true);
 		Gdx.input.setCatchMenuKey(false);
 		

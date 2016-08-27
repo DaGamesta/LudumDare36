@@ -10,7 +10,7 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Ludum Dare 36";
         config.height = 720;
-        config.width = 1080;
+        config.width = 1280;
         //config.fullscreen = true;
         new LwjglApplication(new LudumDare36Game(arg, GameScreen.class), config);
     }

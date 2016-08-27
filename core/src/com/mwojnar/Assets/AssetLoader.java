@@ -30,26 +30,17 @@ public class AssetLoader {
 	public static boolean loaded = false;
 	public static AssetManager assetManager;
 	private static TextureAtlas atlas;
-	//public static Texture ;
-	//public static TextureRegion ;
-	//public static Sprite ;
+	public static TextureRegion reaperTexture, cornStalkTexture;
+	public static Sprite spriteReaper, spriteCornStalk;
 	//public static BackgroundTemplate ;
 	//public static Sound ;
 	//public static SoundGroup ;
 	//public static MusicTemplate ;
 	public static MusicHandler musicHandler;
 	public static List<Class<? extends Entity>> classList = new ArrayList<Class<? extends Entity>>();
-	public static List<Class<? extends MaskSurface>> surfaceClassList = new ArrayList<Class<? extends MaskSurface>>();
 	public static List<Pair<String, Sprite>> spriteList = new ArrayList<Pair<String, Sprite>>();
-	public static List<Pair<String, ?>> spriteWallBackgroundList = new ArrayList<Pair<String, ?>>();
-	public static List<Pair<String, ?>> spriteWallEdgeList = new ArrayList<Pair<String, ?>>();
-	public static List<Pair<String, ?>> spriteGumballList = new ArrayList<Pair<String, ?>>();
-	public static List<Pair<String, ?>> surfaceTypeList = new ArrayList<Pair<String, ?>>();
-	public static List<Pair<String, ?>> cannonTypeList = new ArrayList<Pair<String, ?>>();
 	public static List<Pair<String, BackgroundTemplate>> backgroundList = new ArrayList<Pair<String, BackgroundTemplate>>();
 	public static List<Pair<String, MusicTemplate>> musicList = new ArrayList<Pair<String, MusicTemplate>>();
-	public static List<Pair<String, ?>> paintColorList = new ArrayList<Pair<String, ?>>();
-	public static List<Pair<String, ?>> dribbleSkinList = new ArrayList<Pair<String, ?>>();
 	public static BitmapFont debugFont = new BitmapFont(true);
 	public static Color greenTextColor = new Color(52.0f / 255.0f, 217.0f / 255.0f, 34.0f / 255.0f, 1.0f),
 			blueTextColor = new Color(77.0f / 255.0f, 207.0f / 255.0f, 228.0f / 255.0f, 1.0f);
@@ -66,10 +57,10 @@ public class AssetLoader {
 		
 		musicHandler = new MusicHandler();
 		
-		//assetManager.load("data/Images/DribbleTextures.pack", TextureAtlas.class);
+		assetManager.load("data/Images/LudumDare36Textures.pack", TextureAtlas.class);
 		//atlas = new TextureAtlas(Gdx.files.internal("data/Images/DribbleTextures.pack"));
 		
-		Preferences preferences = Gdx.app.getPreferences("Dribble Prefs");
+		Preferences preferences = Gdx.app.getPreferences("LudumDare36 Prefs");
 		musicVolume = preferences.getFloat("musicVolume", 0.5f);
 		soundVolume = preferences.getFloat("soundVolume", 1.0f);
 		
@@ -77,12 +68,13 @@ public class AssetLoader {
 		
 		debugFont.setColor(Color.RED);
 		debugFont.setUseIntegerPositions(false);
+		debugFont.getData().setScale(3.0f);
 		
 	}
 	
 	public static void postload() {
 		
-		//atlas = assetManager.get("data/Images/DribbleTextures.pack", TextureAtlas.class);
+		atlas = assetManager.get("data/Images/LudumDare36Textures.pack", TextureAtlas.class);
 		
 		loadMusic();
 		loadSounds();
@@ -135,14 +127,15 @@ public class AssetLoader {
 	
 	private static void loadTextures() {
 		
-		//greenTexture = atlas.findRegion("Colors/green");
+		reaperTexture = atlas.findRegion("Reaper");
+		cornStalkTexture = atlas.findRegion("CornStalk");
 		
 	}
 	
 	private static void loadSprites() {
 		
-		//spriteDribble = new Sprite(textureDribble, 18);
-		//spriteList.add(new Pair<String, Sprite>("Dribble", spriteDribble));
+		spriteReaper = new Sprite(reaperTexture, 1);
+		spriteCornStalk = new Sprite(cornStalkTexture, 1);
 		
 	}
 	

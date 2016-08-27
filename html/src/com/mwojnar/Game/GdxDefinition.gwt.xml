@@ -5,7 +5,7 @@
 	
  	<inherits name='PlaygonEngine' />
 	
-	<inherits name='Dribble' />
+	<inherits name='LudumDare36' />
 	<entry-point class='com.mwojnar.Game.client.HtmlLauncher' />
 	
 	<set-configuration-property name="gdx.assetpath" value="../android/assets" />

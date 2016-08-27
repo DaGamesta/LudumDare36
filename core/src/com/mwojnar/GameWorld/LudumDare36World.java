@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Game.LudumDare36Game;
+import com.mwojnar.GameObjects.CornStalk;
+import com.mwojnar.GameObjects.Reaper;
 import com.mwojnar.Assets.AssetLoader;
 import com.playgon.GameEngine.Background;
 import com.playgon.GameEngine.BackgroundTemplate;
@@ -32,15 +34,12 @@ public class LudumDare36World extends GameWorld {
 	private long framesSinceLevelCreation = 0;
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
+	private float scrollSpeed = -1.0f;
 	
 	public LudumDare36World() {
 		
 		super();
-		/*Entity tempEntity = new Dribble(this);
-		tempEntity.setPos(new Vector2(100, 50), true);
-		createEntity(tempEntity);*/
-		
-		setUsingRegions(true);
+		setUsingRegions(false);
 		
 	}
 	
@@ -51,29 +50,6 @@ public class LudumDare36World extends GameWorld {
 		initializeLevelEditorLists();
 		getRenderer().setUsingIntegerViewPosition(false);
 		getRenderer().setClearColor(Color.BLACK);
-		
-//		if (Gdx.app.getType() == ApplicationType.Android) {
-//			
-//			DebugLoadLevelEntity levelLoader = new DebugLoadLevelEntity(this, /*Gdx.files.internal("data/Levels/")*/Gdx.files.absolute("/sdcard/Download/"));
-//			createEntity(levelLoader);
-//			
-//		} else {
-			
-//			loadLevel(Gdx.files.internal("data/Levels/" + currentLevel));
-//			Spike windWall = new Spike(this);
-//			List<Vector2> polygonDefinition = new ArrayList<Vector2>(Arrays.asList(new Vector2(500.0f, 50.0f),
-//					new Vector2(600.0f, 50.0f),
-//					new Vector2(600.0f, 150.0f),
-//					new Vector2(500.0f, 150.0f)));
-//			windWall.setAbsolutePolygonDefinition(polygonDefinition);
-//			createEntity(windWall);
-//			DribbleEntity entity = new BizBot(this);
-//			entity.setPos(new Vector2(550.0f, 200.0f), false);
-//			//entity.setRotation(90);
-//			((BizBot)entity).setMoveLeft(false);
-//			createEntity(entity);
-//			
-//		}
 		
 		boolean loadMenus = true;
 		if (LudumDare36Game.args != null) {
@@ -98,7 +74,7 @@ public class LudumDare36World extends GameWorld {
 		}
 		if (loadMenus) {
 			
-			
+			createEntity(new Reaper(this).setPos(getGameDimensions().x / 2.0f - AssetLoader.spriteReaper.getWidth() / 2.0f, getGameDimensions().y / 2.0f - AssetLoader.spriteReaper.getHeight() / 2.0f, false));
 			
 		}
 		
@@ -153,6 +129,11 @@ public class LudumDare36World extends GameWorld {
 		} else if (levelToLoad == null) {
 			
 			super.updateMain(delta);
+			if (rand.nextFloat() < 1.0f / 60.0f) {
+				
+				spawnCorn(rand.nextInt(10));
+				
+			}
 			
 		} else {
 			
@@ -302,6 +283,30 @@ public class LudumDare36World extends GameWorld {
 	public Random getRandom() {
 		
 		return rand;
+		
+	}
+	
+	public float getScrollSpeed() {
+		
+		return scrollSpeed;
+		
+	}
+	
+	public void setScrollSpeed(float scrollSpeed) {
+		
+		this.scrollSpeed = scrollSpeed;
+		
+	}
+	
+	public void spawnCorn(int row) {
+		
+		float baseX = 1500.0f;
+		float baseY = row * 72.0f;
+		createEntity(new CornStalk(this).setPos(baseX, baseY, false));
+		createEntity(new CornStalk(this).setPos(baseX + 72 - AssetLoader.spriteCornStalk.getWidth(), baseY, false));
+		createEntity(new CornStalk(this).setPos(baseX + 36 - AssetLoader.spriteCornStalk.getWidth() / 2.0f, baseY + 36 - AssetLoader.spriteCornStalk.getHeight() / 2.0f, false));
+		createEntity(new CornStalk(this).setPos(baseX, baseY + 72 - AssetLoader.spriteCornStalk.getHeight(), false));
+		createEntity(new CornStalk(this).setPos(baseX + 72 - AssetLoader.spriteCornStalk.getWidth(), baseY + 72 - AssetLoader.spriteCornStalk.getHeight(), false));
 		
 	}
 	
