@@ -3,6 +3,7 @@ package com.mwojnar.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Assets.AssetLoader;
@@ -12,16 +13,23 @@ import com.playgon.GameWorld.GameWorld;
 public class LudumDare36Renderer extends GameRenderer {
 	
 	public static int numWallSpriteRenders = 0, timeSinceStart = 0;
+	private ShaderProgram shaderProgram;
 	
 	public LudumDare36Renderer(GameWorld world, int gameWidth, int gameHeight) {
 		
 		super(world, gameWidth, gameHeight);
 		
+		String vertexShader = Gdx.files.internal("data/Shaders/Sepia/sepia.vert").readString();
+        String fragmentShader = Gdx.files.internal("data/Shaders/Sepia/sepia.frag").readString();
+        shaderProgram = new ShaderProgram(vertexShader,fragmentShader);
+        setShaderProgram(shaderProgram);
+        
+		
 	}
 	
 	@Override
 	public void render(float delta, float runTime) {
-
+		
 		setCamPos(new Vector2(getDimensions().x / 2.0f, getDimensions().y / 2.0f));
 		if (AssetLoader.assetManager.update()) {
 			

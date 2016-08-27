@@ -1,19 +1,26 @@
 LudumDare36Textures.png
-size: 128, 128
+size: 1024, 1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 CornStalk
   rotate: false
-  xy: 88, 2
+  xy: 670, 2
   size: 20, 40
   orig: 20, 40
   offset: 0, 0
   index: -1
 Reaper
   rotate: false
-  xy: 2, 2
+  xy: 584, 2
   size: 80, 40
   orig: 80, 40
+  offset: 0, 0
+  index: -1
+spr_reaper_strip4
+  rotate: false
+  xy: 2, 2
+  size: 576, 72
+  orig: 576, 72
   offset: 0, 0
   index: -1
