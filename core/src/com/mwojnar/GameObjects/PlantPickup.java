@@ -9,9 +9,11 @@ import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameWorld;
 
-public class CornStalk extends Entity {
+public class PlantPickup extends Entity {
 	
-	public CornStalk(GameWorld myWorld) {
+	private LudumDare36World.Ammo type = LudumDare36World.Ammo.CORN;
+	
+	public PlantPickup(GameWorld myWorld) {
 		
 		super(myWorld);
 		setSprite(AssetLoader.spriteCornStalk);
@@ -30,6 +32,27 @@ public class CornStalk extends Entity {
 			destroy();
 			
 		}
+		
+	}
+	
+	public LudumDare36World.Ammo getType() {
+		
+		return type;
+		
+	}
+	
+	public PlantPickup setType(LudumDare36World.Ammo type) {
+		
+		this.type = type;
+		switch (type) {
+		
+		case CORN: setSprite(AssetLoader.spriteCornStalk); break;
+		case WHEAT: setSprite(AssetLoader.spriteWheat); break;
+		case RICE: setSprite(AssetLoader.spriteRice); break;
+		
+		}
+		
+		return this;
 		
 	}
 	

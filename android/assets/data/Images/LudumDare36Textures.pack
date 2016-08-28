@@ -1,26 +1,138 @@
 LudumDare36Textures.png
-size: 1024, 1024
+size: 2048, 2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-CornStalk
+bg_grass
   rotate: false
-  xy: 670, 2
-  size: 20, 40
-  orig: 20, 40
+  xy: 1160, 80
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: -1
+CornStalkBullet
+  rotate: false
+  xy: 1612, 80
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+CornStalkPickup
+  rotate: false
+  xy: 2030, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+CornStalkStored
+  rotate: false
+  xy: 1612, 80
+  size: 40, 20
+  orig: 40, 20
   offset: 0, 0
   index: -1
 Reaper
   rotate: false
-  xy: 584, 2
+  xy: 1526, 80
   size: 80, 40
   orig: 80, 40
   offset: 0, 0
   index: -1
-spr_reaper_strip4
+RiceBullet
+  rotate: false
+  xy: 1784, 80
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+RicePickup
+  rotate: false
+  xy: 2030, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+RiceStored
+  rotate: false
+  xy: 1612, 80
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+spr_corn_collectible
+  rotate: false
+  xy: 2030, 24
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+spr_corn_shot
+  rotate: false
+  xy: 1658, 80
+  size: 36, 16
+  orig: 36, 16
+  offset: 0, 0
+  index: -1
+spr_crossbow_strip10
   rotate: false
   xy: 2, 2
+  size: 1440, 72
+  orig: 1440, 72
+  offset: 0, 0
+  index: -1
+spr_ox_strip8
+  rotate: false
+  xy: 2, 80
+  size: 1152, 72
+  orig: 1152, 72
+  offset: 0, 0
+  index: -1
+spr_reaper_strip4
+  rotate: false
+  xy: 1448, 2
   size: 576, 72
   orig: 576, 72
+  offset: 0, 0
+  index: -1
+spr_wheat_bunch
+  rotate: false
+  xy: 1700, 80
+  size: 36, 16
+  orig: 36, 16
+  offset: 0, 0
+  index: -1
+spr_wheat_collectible
+  rotate: false
+  xy: 2030, 46
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+spr_wheat_shot
+  rotate: false
+  xy: 1742, 80
+  size: 36, 16
+  orig: 36, 16
+  offset: 0, 0
+  index: -1
+WheatBullet
+  rotate: false
+  xy: 1784, 80
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+WheatPickup
+  rotate: false
+  xy: 2030, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+WheatStored
+  rotate: false
+  xy: 1612, 80
+  size: 40, 20
+  orig: 40, 20
   offset: 0, 0
   index: -1

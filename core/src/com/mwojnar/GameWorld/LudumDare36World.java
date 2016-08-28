@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Game.LudumDare36Game;
-import com.mwojnar.GameObjects.CornStalk;
+import com.mwojnar.GameObjects.PlantPickup;
 import com.mwojnar.GameObjects.Reaper;
 import com.mwojnar.Assets.AssetLoader;
 import com.playgon.GameEngine.Background;
@@ -28,6 +28,8 @@ import com.playgon.Utils.LoadingThread;
 import com.playgon.Utils.Pair;
 
 public class LudumDare36World extends GameWorld {
+
+	public enum Ammo { CORN, WHEAT, RICE }
 	
 	private LoadingThread loadingThread = null;
 	private boolean showFPS = true, paused = false;
@@ -35,6 +37,7 @@ public class LudumDare36World extends GameWorld {
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
 	private float scrollSpeed = -1.0f;
+	private Background mainBackground = null;
 	
 	public LudumDare36World() {
 		
@@ -75,6 +78,10 @@ public class LudumDare36World extends GameWorld {
 		if (loadMenus) {
 			
 			createEntity(new Reaper(this).setPos(getGameDimensions().x / 2.0f - AssetLoader.spriteReaper.getWidth() / 2.0f, getGameDimensions().y / 2.0f - AssetLoader.spriteReaper.getHeight() / 2.0f, false));
+			mainBackground = new Background(AssetLoader.grassBackground);
+			mainBackground.setTilingX(true);
+			mainBackground.setTilingY(true);
+			addBackground(mainBackground);
 			
 		}
 		
@@ -129,9 +136,17 @@ public class LudumDare36World extends GameWorld {
 		} else if (levelToLoad == null) {
 			
 			super.updateMain(delta);
+			mainBackground.setOffset(new Vector2(mainBackground.getOffset().x - scrollSpeed, 0.0f));
 			if (rand.nextFloat() < 1.0f / 60.0f) {
 				
-				spawnCorn(rand.nextInt(10));
+				Ammo type = Ammo.CORN;
+				switch (rand.nextInt(2)) {
+				
+				case 1: type = Ammo.WHEAT; break;
+				case 2: type = Ammo.RICE; break;
+				
+				}
+				spawnPlant(rand.nextInt(10), type);
 				
 			}
 			
@@ -298,15 +313,15 @@ public class LudumDare36World extends GameWorld {
 		
 	}
 	
-	public void spawnCorn(int row) {
+	public void spawnPlant(int row, Ammo type) {
 		
 		float baseX = 1500.0f;
 		float baseY = row * 72.0f;
-		createEntity(new CornStalk(this).setPos(baseX, baseY, false));
-		createEntity(new CornStalk(this).setPos(baseX + 72 - AssetLoader.spriteCornStalk.getWidth(), baseY, false));
-		createEntity(new CornStalk(this).setPos(baseX + 36 - AssetLoader.spriteCornStalk.getWidth() / 2.0f, baseY + 36 - AssetLoader.spriteCornStalk.getHeight() / 2.0f, false));
-		createEntity(new CornStalk(this).setPos(baseX, baseY + 72 - AssetLoader.spriteCornStalk.getHeight(), false));
-		createEntity(new CornStalk(this).setPos(baseX + 72 - AssetLoader.spriteCornStalk.getWidth(), baseY + 72 - AssetLoader.spriteCornStalk.getHeight(), false));
+		createEntity(new PlantPickup(this).setType(type).setPos(baseX, baseY, false));
+		createEntity(new PlantPickup(this).setType(type).setPos(baseX + 72 - AssetLoader.spriteCornStalk.getWidth(), baseY, false));
+		createEntity(new PlantPickup(this).setType(type).setPos(baseX + 36 - AssetLoader.spriteCornStalk.getWidth() / 2.0f, baseY + 36 - AssetLoader.spriteCornStalk.getHeight() / 2.0f, false));
+		createEntity(new PlantPickup(this).setType(type).setPos(baseX, baseY + 72 - AssetLoader.spriteCornStalk.getHeight(), false));
+		createEntity(new PlantPickup(this).setType(type).setPos(baseX + 72 - AssetLoader.spriteCornStalk.getWidth(), baseY + 72 - AssetLoader.spriteCornStalk.getHeight(), false));
 		
 	}
 	

@@ -3,22 +3,23 @@ package com.mwojnar.GameObjects;
 import java.util.List;
 
 import com.mwojnar.Assets.AssetLoader;
+import com.mwojnar.GameWorld.LudumDare36World;
 import com.playgon.GameEngine.Entity;
 import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameWorld;
 
-public class CornShot extends Entity {
+public class PlantBullet extends Entity {
 	
 	private float speed = 8.0f;
+	private LudumDare36World.Ammo type = LudumDare36World.Ammo.CORN;
 	
-	public CornShot(GameWorld myWorld) {
+	public PlantBullet(GameWorld myWorld) {
 		
 		super(myWorld);
-		setSprite(AssetLoader.spriteCornStalk);
+		setSprite(AssetLoader.spriteCornStalkShot);
 		setMask(new Mask(this, getSprite().getWidth(), getSprite().getHeight()));
 		setPivot(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f);
-		setRotation(90.0f);
 		setGridVelocity(speed, 0.0f);
 		
 	}
@@ -28,6 +29,32 @@ public class CornShot extends Entity {
 		
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		moveByVelocity();
+		if (getPos(false).x > getWorld().getGameDimensions().x) {
+			
+			destroy();
+			
+		}
+		
+	}
+	
+	public LudumDare36World.Ammo getType() {
+		
+		return type;
+		
+	}
+	
+	public PlantBullet setType(LudumDare36World.Ammo type) {
+		
+		this.type = type;
+		switch(type) {
+		
+		case CORN: setSprite(AssetLoader.spriteCornStalkShot); break;
+		case WHEAT: setSprite(AssetLoader.spriteWheatShot); break;
+		case RICE: setSprite(AssetLoader.spriteRiceShot); break;
+		
+		}
+		
+		return this;
 		
 	}
 	

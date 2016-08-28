@@ -30,9 +30,14 @@ public class AssetLoader {
 	public static boolean loaded = false;
 	public static AssetManager assetManager;
 	private static TextureAtlas atlas;
-	public static TextureRegion reaperTexture, cornStalkTexture;
-	public static Sprite spriteReaper, spriteCornStalk;
-	//public static BackgroundTemplate ;
+	public static TextureRegion reaperTexture, cornStalkTexture, crossbowTexture, oxTexture,
+					wheatTexture, riceTexture, cornStalkShotTexture, wheatShotTexture,
+					riceShotTexture, wheatBunchTexture;
+	public static Sprite spriteReaper, spriteCornStalk, spriteCrossbow, spriteOx, spriteWheat,
+					spriteRice, spriteCornStalkShot, spriteWheatShot, spriteRiceShot,
+					spriteWheatBunch;
+	public static TextureRegion grassTexture;
+	public static BackgroundTemplate grassBackground;
 	//public static Sound ;
 	//public static SoundGroup ;
 	//public static MusicTemplate ;
@@ -127,15 +132,35 @@ public class AssetLoader {
 	
 	private static void loadTextures() {
 		
-		reaperTexture = atlas.findRegion("Reaper");
-		cornStalkTexture = atlas.findRegion("CornStalk");
+		reaperTexture = atlas.findRegion("spr_reaper_strip4");
+		crossbowTexture = atlas.findRegion("spr_crossbow_strip10");
+		oxTexture = atlas.findRegion("spr_ox_strip8");
+		cornStalkTexture = atlas.findRegion("spr_corn_collectible");
+		wheatTexture = atlas.findRegion("spr_wheat_collectible");
+		riceTexture = atlas.findRegion("RicePickup");
+		cornStalkShotTexture = atlas.findRegion("spr_corn_shot");
+		wheatShotTexture = atlas.findRegion("spr_wheat_shot");
+		riceShotTexture = atlas.findRegion("RiceBullet");
+		wheatBunchTexture = atlas.findRegion("spr_wheat_bunch");
+		
+		grassTexture = atlas.findRegion("bg_grass");
 		
 	}
 	
 	private static void loadSprites() {
 		
-		spriteReaper = new Sprite(reaperTexture, 1);
+		spriteReaper = new Sprite(reaperTexture, 4);
+		spriteCrossbow = new Sprite(crossbowTexture, 10);
+		spriteOx = new Sprite(oxTexture, 8);
 		spriteCornStalk = new Sprite(cornStalkTexture, 1);
+		spriteWheat = new Sprite(wheatTexture, 1);
+		spriteRice = new Sprite(riceTexture, 1);
+		spriteCornStalkShot = new Sprite(cornStalkShotTexture, 1);
+		spriteWheatShot = new Sprite(wheatShotTexture, 1);
+		spriteRiceShot = new Sprite(riceShotTexture, 1);
+		spriteWheatBunch = new Sprite(wheatBunchTexture, 1);
+		
+		grassBackground = new BackgroundTemplate(grassTexture, 1);
 		
 	}
 	
