@@ -136,13 +136,13 @@ public class LudumDare36Renderer extends GameRenderer {
 			Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			getBatcher().begin();
-			//getBatcher().draw(AssetLoader.wojworksTexture, getDimensions().x / 2.0f - AssetLoader.wojworksTexture.getWidth(), getDimensions().y / 2.0f - AssetLoader.wojworksTexture.getHeight(), AssetLoader.wojworksTexture.getWidth() * 2.0f, AssetLoader.wojworksTexture.getHeight() * 2.0f, 0, 0, AssetLoader.wojworksTexture.getWidth(), AssetLoader.wojworksTexture.getHeight(), false, true);
+			getBatcher().draw(AssetLoader.wojworksTexture, getDimensions().x / 2.0f - AssetLoader.wojworksTexture.getWidth() * 2.0f, getDimensions().y / 2.0f - AssetLoader.wojworksTexture.getHeight() * 2.0f, AssetLoader.wojworksTexture.getWidth() * 4.0f, AssetLoader.wojworksTexture.getHeight() * 4.0f, 0, 0, AssetLoader.wojworksTexture.getWidth(), AssetLoader.wojworksTexture.getHeight(), false, true);
 			getBatcher().end();
 			getShapeRenderer().setAutoShapeType(true);
 			getShapeRenderer().begin();
 			getShapeRenderer().set(ShapeType.Filled);
 			getShapeRenderer().setColor(Color.WHITE);
-			getShapeRenderer().rect(0.0f, 200.0f, getDimensions().x * AssetLoader.assetManager.getProgress(), 10.0f);
+			getShapeRenderer().rect(0.0f, 600.0f, getDimensions().x * AssetLoader.assetManager.getProgress(), 10.0f);
 			getShapeRenderer().end();
 			
 		}

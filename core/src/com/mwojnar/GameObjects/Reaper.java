@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 import com.mwojnar.Assets.AssetLoader;
 import com.mwojnar.GameWorld.LudumDare36World;
 import com.playgon.GameEngine.Collision;
@@ -19,18 +20,23 @@ public class Reaper extends Entity {
 	
 	private LudumDare36World.Ammo ammo = LudumDare36World.Ammo.CORN;
 	private float acceleration = 1.0f, maxSpeed = 4.0f, traction = 1.0f;
-	private int cornAmmo = 0, maxCornAmmo = 25, wheatAmmo = 0, maxWheatAmmo = 25, riceAmmo = 0, maxRiceAmmo = 25, cooldown = 0, cooldownMax = 22, crossbowFrame = 0, crossbowAnimatingDelayTimer = 0, oxFrame = 0;
+	private int cornAmmo = 0, maxCornAmmo = 100, wheatAmmo = 0, maxWheatAmmo = 50, riceAmmo = 0, maxRiceAmmo = 25, cooldown = 0,
+			cooldownMax = 22, crossbowFrame = 0, crossbowAnimatingDelayTimer = 0, oxFrame = 0, HP = 10, invincibilityTimer = 0,
+			invincibilityTimerMax = 60;
 	private boolean crossbowAnimating = false, isSlowCrossbowAnimating = false;
-	private Vector2[] stackOffsets = new Vector2[25];
+	private Vector2[] stackOffsets = new Vector2[100];
+	Mask bullMask = null;
 	
 	public Reaper(GameWorld myWorld) {
 		
 		super(myWorld);
 		setSprite(AssetLoader.spriteReaper);
 		setMask(new Mask(this, getSprite().getWidth(), getSprite().getHeight()));
+		bullMask = new Mask(this, new Vector2(8.0f, 16.0f), new Vector2(56.0f, 40.0f));
+		setPivot(32.0f, getSprite().getHeight() / 2.0f);
 		setDepth(50);
 		Random rand = new Random();
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i < 100; i++) {
 			
 			stackOffsets[i] = new Vector2(rand.nextInt(10), rand.nextInt(10));
 			
@@ -68,8 +74,26 @@ public class Reaper extends Entity {
 			horPressed = true;
 			
 		}
+		if (((LudumDare36World)getWorld()).getTutorialMode() == LudumDare36World.TutorialMode.MOVEMENT && (verPressed || horPressed)) {
+			
+			if (cornAmmo <= 0 && wheatAmmo <= 0) {
+				
+				((LudumDare36World)getWorld()).setTutorialMode(LudumDare36World.TutorialMode.RESTOCK);
+				
+			} else {
+				
+				((LudumDare36World)getWorld()).setTutorialMode(LudumDare36World.TutorialMode.SHOOTING);
+				
+			}
+			
+		}
 		if (keysFirstDown.contains(com.badlogic.gdx.Input.Keys.SHIFT_LEFT) || keysFirstDown.contains(com.badlogic.gdx.Input.Keys.SHIFT_RIGHT)) {
 			
+			if (((LudumDare36World)getWorld()).getTutorialMode() == LudumDare36World.TutorialMode.SWITCHING) {
+				
+				((LudumDare36World)getWorld()).setTutorialMode(LudumDare36World.TutorialMode.DONE);
+				
+			}
 			int ammoAmount = 0;
 			switch (ammo) {
 			
@@ -172,51 +196,65 @@ public class Reaper extends Entity {
 		
 		for (Entity entity : getWorld().getActiveEntityList()) {
 			
-			if (entity instanceof PlantPickup) {
+			if (entity instanceof PlantPickup && !((PlantPickup)entity).isTrampled()) {
 				
 				List<Collision> collisions = collisionsWith(entity);
-				if (!collisions.isEmpty() && entity.getPos(false).x + entity.getSprite().getWidth() > getPos(false).x + getSprite().getWidth() - 26) {
+				if (!collisions.isEmpty()) {
 					
-					entity.destroy();
-					switch (((PlantPickup)entity).getType()) {
-					
-					case CORN: if (cornAmmo < maxCornAmmo) {
+					if (!collisionsWith(entity, bullMask).isEmpty()) {
 						
-						cornAmmo++;
-						if (ammo == LudumDare36World.Ammo.CORN && !crossbowAnimating && crossbowFrame == 0) {
+						((PlantPickup)entity).trample();
+						AssetLoader.sndTrample.play(AssetLoader.soundVolume);
+						
+					} else if (entity.getPos(false).x + entity.getSprite().getWidth() > getPos(false).x + getSprite().getWidth() - 26) {
+						
+						entity.destroy();
+						if (((LudumDare36World)getWorld()).getTutorialMode() == LudumDare36World.TutorialMode.RESTOCK) {
 							
-							crossbowAnimating = true;
-							crossbowAnimatingDelayTimer = 0;
-							cooldown = 10;
+							((LudumDare36World)getWorld()).setTutorialMode(LudumDare36World.TutorialMode.SHOOTING);
 							
 						}
+						switch (((PlantPickup)entity).getType()) {
 						
-					} break;
-					case WHEAT: if (wheatAmmo < maxWheatAmmo) {
+						case CORN: if (cornAmmo < maxCornAmmo) {
+							
+							cornAmmo++;
+							if (ammo == LudumDare36World.Ammo.CORN && !crossbowAnimating && crossbowFrame == 0) {
+								
+								crossbowAnimating = true;
+								crossbowAnimatingDelayTimer = 0;
+								cooldown = 10;
+								
+							}
+							
+						} AssetLoader.sndCornSlice.play(AssetLoader.soundVolume); break;
+						case WHEAT: if (wheatAmmo < maxWheatAmmo) {
+							
+							wheatAmmo++;
+							if (ammo == LudumDare36World.Ammo.WHEAT && !crossbowAnimating && crossbowFrame == 0) {
+								
+								crossbowAnimating = true;
+								crossbowAnimatingDelayTimer = 0;
+								cooldown = 10;
+								
+							}
+							
+						} AssetLoader.sndWheatSlice.play(AssetLoader.soundVolume); break;
+						case RICE: if (riceAmmo < maxRiceAmmo) {
+							
+							riceAmmo++;
+							if (ammo == LudumDare36World.Ammo.RICE && !crossbowAnimating && crossbowFrame == 0) {
+								
+								crossbowAnimating = true;
+								crossbowAnimatingDelayTimer = 0;
+								cooldown = 10;
+								
+							}
+							
+						} break;
 						
-						wheatAmmo++;
-						if (ammo == LudumDare36World.Ammo.WHEAT && !crossbowAnimating && crossbowFrame == 0) {
-							
-							crossbowAnimating = true;
-							crossbowAnimatingDelayTimer = 0;
-							cooldown = 10;
-							
 						}
 						
-					} break;
-					case RICE: if (riceAmmo < maxRiceAmmo) {
-						
-						riceAmmo++;
-						if (ammo == LudumDare36World.Ammo.RICE && !crossbowAnimating && crossbowFrame == 0) {
-							
-							crossbowAnimating = true;
-							crossbowAnimatingDelayTimer = 0;
-							cooldown = 10;
-							
-						}
-						
-					} break;
-					
 					}
 					
 				}
@@ -265,10 +303,22 @@ public class Reaper extends Entity {
 			
 		}
 		
+		if (invincibilityTimer > 0) {
+			
+			invincibilityTimer--;
+			
+		}
+		
 	}
 	
 	private void shoot() {
 		
+		if (((LudumDare36World)getWorld()).getTutorialMode() == LudumDare36World.TutorialMode.SHOOTING) {
+			
+			((LudumDare36World)getWorld()).setTutorialMode(LudumDare36World.TutorialMode.SWITCHING);
+			
+		}
+		AssetLoader.sndCrossbowShoot.play(AssetLoader.soundVolume);
 		cooldown = cooldownMax;
 		if (ammo == LudumDare36World.Ammo.WHEAT) {
 			
@@ -333,7 +383,11 @@ public class Reaper extends Entity {
 	@Override
 	public void draw(GameRenderer renderer) {
 		
-		AssetLoader.spriteOx.draw(getPos(false).x, getPos(false).y, oxFrame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
+		if (invincibilityTimer <= 0 || (invincibilityTimer / 4) % 2 == 0) {
+			
+			AssetLoader.spriteOx.draw(getPos(false).x, getPos(false).y, oxFrame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
+			
+		}
 		super.draw(renderer);
 		AssetLoader.spriteCrossbow.draw(getPos(false).x, getPos(false).y, crossbowFrame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		if (getAmmo() > 0 && !crossbowAnimating) {
@@ -360,9 +414,72 @@ public class Reaper extends Entity {
 				}
 				
 			}
+			
+		}
+		switch (((LudumDare36World)getWorld()).getTutorialMode()) {
+		
+		case MOVEMENT: AssetLoader.debugFont.draw(renderer.getBatcher(), "Arrow Keys to Move", getPos(false).x - 100.0f, getPos(false).y + getSprite().getHeight(), getSprite().getWidth() + 200.0f, Align.center, false); break;
+		case RESTOCK: AssetLoader.debugFont.draw(renderer.getBatcher(), "Harvest Crops for Ammo", getPos(false).x - 100.0f, getPos(false).y + getSprite().getHeight(), getSprite().getWidth() + 200.0f, Align.center, false); break;
+		case SHOOTING: AssetLoader.debugFont.draw(renderer.getBatcher(), "Space to Shoot", getPos(false).x - 100.0f, getPos(false).y + getSprite().getHeight(), getSprite().getWidth() + 200.0f, Align.center, false); break;
+		case SWITCHING: AssetLoader.debugFont.draw(renderer.getBatcher(), "Shift to Switch Ammo", getPos(false).x - 100.0f, getPos(false).y + getSprite().getHeight(), getSprite().getWidth() + 200.0f, Align.center, false); break;
+		
 		}
 		
-		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(getAmmo()), 0.0f, 0.0f);
+		//AssetLoader.debugFont.draw(renderer.getBatcher(), "HP: " + Integer.toString(getHP()), 250.0f, 0.0f);
+		//AssetLoader.debugFont.draw(renderer.getBatcher(), "Difficulty: " + Integer.toString(((LudumDare36World)getWorld()).getDifficulty()), 450.0f, 0.0f);
+		
+		for (int i = 0; i < 10; i++) {
+			
+			int frame = 1;
+			if (HP > i) {
+				
+				frame = 0;
+				
+			}
+			AssetLoader.spriteHeart.draw(i * AssetLoader.spriteHeart.getWidth(), 0.0f, frame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
+			
+		}
+		
+		AssetLoader.debugFont.draw(renderer.getBatcher(), "Ammo: " + Integer.toString(getAmmo()), 500.0f, 0.0f);
+		AssetLoader.debugFont.draw(renderer.getBatcher(), "Score: " + Integer.toString(((LudumDare36World)getWorld()).getScore()), 750.0f, 0.0f);
+		
+	}
+
+	private int getHP() {
+		
+		return HP;
+		
+	}
+
+	private void setHP(int hP) {
+		
+		HP = hP;
+		
+	}
+	
+	public boolean hurt(int amount) {
+		
+		if (invincibilityTimer <= 0) {
+			
+			HP -= amount;
+			if (HP <= 0) {
+				
+				die();
+				
+			}
+			invincibilityTimer = invincibilityTimerMax;
+			return true;
+			
+		}
+		return false;
+		
+	}
+
+	private void die() {
+		
+		((LudumDare36World)getWorld()).clearWorld();
+		((LudumDare36World)getWorld()).setMode(LudumDare36World.Mode.HIGHSCORE);
+		getWorld().createEntity(new ScoreBoard(getWorld()));
 		
 	}
 	

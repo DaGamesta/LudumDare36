@@ -6,41 +6,34 @@ repeat: none
 bg_grass
   rotate: false
   xy: 1160, 80
-  size: 360, 360
-  orig: 360, 360
+  size: 360, 72
+  orig: 360, 72
   offset: 0, 0
   index: -1
-CornStalkBullet
+icon16
   rotate: false
-  xy: 1612, 80
-  size: 40, 20
-  orig: 40, 20
-  offset: 0, 0
-  index: -1
-CornStalkPickup
-  rotate: false
-  xy: 2030, 2
+  xy: 2030, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-CornStalkStored
+icon32
   rotate: false
-  xy: 1612, 80
-  size: 40, 20
-  orig: 40, 20
+  xy: 1660, 156
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
-Reaper
+icon128
   rotate: false
-  xy: 1526, 80
-  size: 80, 40
-  orig: 80, 40
+  xy: 1526, 130
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 RiceBullet
   rotate: false
-  xy: 1784, 80
+  xy: 1820, 134
   size: 32, 8
   orig: 32, 8
   offset: 0, 0
@@ -54,23 +47,37 @@ RicePickup
   index: -1
 RiceStored
   rotate: false
-  xy: 1612, 80
+  xy: 1660, 130
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
 spr_corn_collectible
   rotate: false
-  xy: 2030, 24
+  xy: 2030, 46
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+spr_corn_particles_strip5
+  rotate: false
+  xy: 1976, 128
+  size: 55, 6
+  orig: 55, 6
+  offset: 0, 0
+  index: -1
 spr_corn_shot
   rotate: false
-  xy: 1658, 80
+  xy: 1706, 130
   size: 36, 16
   orig: 36, 16
+  offset: 0, 0
+  index: -1
+spr_corn_trampled
+  rotate: false
+  xy: 1858, 134
+  size: 19, 16
+  orig: 19, 16
   offset: 0, 0
   index: -1
 spr_crossbow_strip10
@@ -78,6 +85,48 @@ spr_crossbow_strip10
   xy: 2, 2
   size: 1440, 72
   orig: 1440, 72
+  offset: 0, 0
+  index: -1
+spr_crow_death_particles_strip3
+  rotate: false
+  xy: 1748, 130
+  size: 24, 7
+  orig: 24, 7
+  offset: 0, 0
+  index: -1
+spr_crowA_strip6
+  rotate: false
+  xy: 1778, 80
+  size: 192, 48
+  orig: 192, 48
+  offset: 0, 0
+  index: -1
+spr_crowB_strip6
+  rotate: false
+  xy: 1526, 80
+  size: 246, 44
+  orig: 246, 44
+  offset: 0, 0
+  index: -1
+spr_egg_particles_strip3
+  rotate: false
+  xy: 1820, 148
+  size: 18, 9
+  orig: 18, 9
+  offset: 0, 0
+  index: -1
+spr_egg_shot
+  rotate: false
+  xy: 1776, 156
+  size: 12, 16
+  orig: 12, 16
+  offset: 0, 0
+  index: -1
+spr_health_strip2
+  rotate: false
+  xy: 1976, 90
+  size: 64, 32
+  orig: 64, 32
   offset: 0, 0
   index: -1
 spr_ox_strip8
@@ -96,43 +145,36 @@ spr_reaper_strip4
   index: -1
 spr_wheat_bunch
   rotate: false
-  xy: 1700, 80
+  xy: 1778, 134
   size: 36, 16
   orig: 36, 16
   offset: 0, 0
   index: -1
 spr_wheat_collectible
   rotate: false
-  xy: 2030, 46
+  xy: 2030, 68
   size: 16, 16
   orig: 16, 16
+  offset: 0, 0
+  index: -1
+spr_wheat_particles_strip3
+  rotate: false
+  xy: 1976, 80
+  size: 12, 3
+  orig: 12, 3
   offset: 0, 0
   index: -1
 spr_wheat_shot
   rotate: false
-  xy: 1742, 80
+  xy: 1706, 152
   size: 36, 16
   orig: 36, 16
   offset: 0, 0
   index: -1
-WheatBullet
+spr_wheat_trampled
   rotate: false
-  xy: 1784, 80
-  size: 32, 8
-  orig: 32, 8
-  offset: 0, 0
-  index: -1
-WheatPickup
-  rotate: false
-  xy: 2030, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-WheatStored
-  rotate: false
-  xy: 1612, 80
-  size: 40, 20
-  orig: 40, 20
+  xy: 1748, 143
+  size: 22, 16
+  orig: 22, 16
   offset: 0, 0
   index: -1

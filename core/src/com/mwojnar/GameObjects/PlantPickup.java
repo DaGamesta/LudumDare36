@@ -12,6 +12,7 @@ import com.playgon.GameWorld.GameWorld;
 public class PlantPickup extends Entity {
 	
 	private LudumDare36World.Ammo type = LudumDare36World.Ammo.CORN;
+	private boolean trampled = false;
 	
 	public PlantPickup(GameWorld myWorld) {
 		
@@ -53,6 +54,24 @@ public class PlantPickup extends Entity {
 		}
 		
 		return this;
+		
+	}
+	
+	public boolean isTrampled() {
+		
+		return trampled;
+		
+	}
+	
+	public void trample() {
+		
+		this.trampled = true;
+		switch (type) {
+		
+		case CORN: setSprite(AssetLoader.spriteCornStalkTrampled); break;
+		case WHEAT: setSprite(AssetLoader.spriteWheatTrampled); break;
+		
+		}
 		
 	}
 	
